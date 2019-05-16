@@ -26,8 +26,8 @@ class  ExampleService extends CafafansHttpRestApiClient
      * @param void
      * @return string
      */
-    public function getExamples($path) {
-        return $this->getServices("/{$path}")->getBody();
+    public function getExamples() {
+        return $this->getServices('/example')->getBody();
     }
 
     /**
@@ -35,36 +35,36 @@ class  ExampleService extends CafafansHttpRestApiClient
      * @param array $data
      * @return string
      */
-    public function createExample($path, $data) {
-        return $this->postService("/{$path}", $data)->getBody();
+    public function createExample($data) {
+        return $this->postService('/example', 'POST', $data)->getBody();
     }
 
     /**
      * Fetching an author instance from authors micro service
-     * @param int $id
+     * @param int $exampleId
      * @return string
      */
-    public function getExample($path, $id) {
-        return $this->getService("/{$path}", $id)->getBody();
+    public function getExample($exampleId) {
+        return $this->getService('/example', $exampleId)->getBody();
     }
 
     /**
      * updating an author instance using authors micro service
      * @param array $data
-     * @param int $id
+     * @param int $exampleId
      * @return string
      */
-    public function editExample($path, $data, $id) {
-        return $this->putService("/{$path}", $data, $id)->getBody();
+    public function editExample($data, $exampleId) {
+        return $this->putService('/example', $data, $exampleId)->getBody();
     }
 
     /**
      * Deleting an author instance from authors micro service
-     * @param int $id
+     * @param int $exampleId
      * @return string
      */
-    public function deleteExample($path, $id) {
-        return $this->deleteService("/{$path}", $id)->getBody();
+    public function deleteExample($exampleId) {
+        return $this->deleteService('/example', $exampleId)->getBody();
     }
 
 }
