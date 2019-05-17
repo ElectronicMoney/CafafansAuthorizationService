@@ -10,7 +10,12 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-$router->post('v1/users', 'UserController@store');
+
+
+
+$router->group(['prefix' => 'v1'], function () use ($router) {
+    $router->post('users', 'UserController@store');
+});
 
 $router->group(['prefix' => 'v1', 'middleware' => 'auth'], function () use ($router) {
     $router->get('/users', 'UserController@index');
@@ -19,3 +24,7 @@ $router->group(['prefix' => 'v1', 'middleware' => 'auth'], function () use ($rou
     $router->patch('/users/{user}', 'UserController@update');
     $router->delete('/users/{user}', 'UserController@destroy');
 });
+
+
+
+
