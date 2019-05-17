@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Traits\ApiResponser;
 
@@ -25,6 +26,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        //Check if the Autthenticated userId is the same as userId
+        if (Auth::user()->role->name !== 'Administrator') {
+            return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
+        }
         $users = User::all();
         return $this->successResponse($users);
     }
@@ -65,7 +70,12 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($userId) {
+        //get user with the given userId
         $user = User::findOrFail($userId);
+        //Check if the Autthenticated userId is the same as userId
+        if (Auth::user()->id !== $user->id) {
+            return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
+        }
         return $this->successResponse($user);
     }
 
@@ -87,8 +97,13 @@ class UserController extends Controller
         //validate the request
        $this->validate($request, $rules);
 
-        //find the user using its id
+        //get user with the given userId
         $user = User::findOrFail($userId);
+        //Check if the Autthenticated userId is the same as userId
+        if (Auth::user()->id !== $user->id) {
+            return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
+        }
+
         //Check if the request has name
         if ($request->has('name')) {
             $user->name    = $request->input('name');
@@ -124,8 +139,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($userId) {
-        //find the user using its id
+        //get user with the given userId
         $user = User::findOrFail($userId);
+        //Check if the Autthenticated userId is the same as userId
+        if (Auth::user()->id !== $user->id) {
+            return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
+        }
+
         $user->delete();
         //Return the new user
         return $this->successResponse($user);
