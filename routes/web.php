@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +21,3 @@ $router->group(['prefix' => 'v1', 'middleware' => 'auth'], function () use ($rou
     $router->patch('/users/{user}', 'UserController@update');
     $router->delete('/users/{user}', 'UserController@destroy');
 });
-
-

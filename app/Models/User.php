@@ -33,12 +33,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     /**
-     * User relationship
-     *
-     * @return User
+     * User belongsTo Role
+     *@param null
+     * @return object $role
      */
     public function role() {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
     }
 
 }

@@ -17,13 +17,13 @@ class Role extends Model
     ];
 
     /**
-     * user belongs to user User
-     *
-     * @return user
+     * Role hasMany User
+     *@param null
+     * @return object $user
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 
 }
